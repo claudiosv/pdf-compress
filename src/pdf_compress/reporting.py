@@ -45,7 +45,7 @@ def show_dry_run(cfg: Config, input_real: Path, output_real: Path) -> None:
     if cfg.linearize:
         lines.append("pikepdf: linearize final candidate")
     lines.append("pikepdf: structural validation")
-    lines.append("pdfinfo: page-count validation")
+    lines.append("PyMuPDF: page-count validation")
     if cfg.pdfa_level != "none":
         lines.append(f"veraPDF: PDF/A-{cfg.pdfa_level}b validation")
 

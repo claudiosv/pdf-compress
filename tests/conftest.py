@@ -39,8 +39,8 @@ def single_page_pdf(tmp_path: Path) -> Path:
 @pytest.fixture
 def corrupted_pdf(tmp_path: Path, sample_pdf: Path) -> Path:
     """A PDF with a bogus ``startxref`` offset — a common real-world form of
-    damage. The trailer/Root are otherwise intact, so both ``pdfinfo`` and
-    pikepdf transparently reconstruct the cross-reference table."""
+    damage. The trailer/Root are otherwise intact, so pikepdf and pymupdf
+    both transparently reconstruct the cross-reference table."""
     data = sample_pdf.read_bytes()
     offset = data.rindex(b"startxref\n") + len(b"startxref\n")
     end = data.index(b"\n", offset)
@@ -50,21 +50,9 @@ def corrupted_pdf(tmp_path: Path, sample_pdf: Path) -> Path:
 
 
 @pytest.fixture
-def severely_corrupted_pdf(tmp_path: Path, sample_pdf: Path) -> Path:
-    """A PDF with its xref table *and* trailer chopped off entirely. pikepdf
-    can still open and repair it by scanning the remaining objects, but
-    ``pdfinfo`` cannot parse it at all."""
-    data = sample_pdf.read_bytes()
-    xref_offset = data.rindex(b"\nxref")
-    truncated = data[:xref_offset] + b"\n%%EOF\n"
-    path = tmp_path / "severely_corrupted.pdf"
-    path.write_bytes(truncated)
-    return path
-
-
-@pytest.fixture
 def garbage_pdf(tmp_path: Path) -> Path:
-    """Bytes that aren't a PDF at all — pikepdf cannot recover this."""
+    """Bytes that aren't a PDF at all — neither pikepdf nor pymupdf can
+    recover this."""
     path = tmp_path / "garbage.pdf"
     path.write_bytes(b"not a pdf at all, just garbage text 1234567890")
     return path
@@ -75,4 +63,19 @@ def encrypted_pdf(tmp_path: Path, sample_pdf: Path) -> Path:
     path = tmp_path / "encrypted.pdf"
     with pikepdf.open(sample_pdf) as pdf:
         pdf.save(path, encryption=pikepdf.Encryption(owner="owner", user="secret"))
+    return path
+
+
+@pytest.fixture
+def signed_pdf(tmp_path: Path, sample_pdf: Path) -> Path:
+    """A PDF whose AcroForm declares signature fields (/SigFlags with the
+    SignaturesExist bit set) — enough to trip the "will invalidate a
+    signature" warning without needing a real cryptographic signature."""
+    path = tmp_path / "signed.pdf"
+    with pikepdf.open(sample_pdf) as pdf:
+        acroform = pdf.make_indirect(
+            pikepdf.Dictionary(Fields=pikepdf.Array([]), SigFlags=3)
+        )
+        pdf.Root.AcroForm = acroform
+        pdf.save(path)
     return path

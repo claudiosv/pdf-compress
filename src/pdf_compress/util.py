@@ -3,8 +3,9 @@ from __future__ import annotations
 import glob
 import re
 import shutil
-import subprocess
 from pathlib import Path
+
+import pymupdf
 
 from pdf_compress.errors import PdfCompressError
 
@@ -21,13 +22,23 @@ def file_bytes(path: Path) -> int:
 
 
 def page_count(path: Path) -> int:
-    result = subprocess.run(
-        ["pdfinfo", str(path)], capture_output=True, text=True, check=False
-    )
-    for line in result.stdout.splitlines():
-        if line.startswith("Pages:"):
-            return int(line.split(":", 1)[1].strip())
-    raise PdfCompressError("Unable to determine the page count.")
+    try:
+        with pymupdf.open(path) as doc:
+            return doc.page_count
+    except RuntimeError as exc:
+        raise PdfCompressError(f"Unable to determine the page count: {exc}") from exc
+
+
+def has_digital_signature(path: Path) -> bool:
+    """True if the PDF's AcroForm declares signature fields (/SigFlags bit 1).
+
+    ``get_sigflags()`` returns ``-1`` when there's no AcroForm at all, so a
+    plain truthiness check would misread that as "has signatures" (-1 & 1 ==
+    1 in two's complement); guard on a real, positive flags value first.
+    """
+    with pymupdf.open(path) as doc:
+        sigflags = doc.get_sigflags()
+    return sigflags > 0 and bool(sigflags & 1)
 
 
 def postscript_escape(value: str) -> str:

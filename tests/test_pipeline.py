@@ -65,21 +65,31 @@ def test_repair_mode_recovers_corrupted_pdf(
     assert result.pages == 3
 
 
-def test_pdfinfo_unreadable_input_fails_clearly(
-    severely_corrupted_pdf: Path, tmp_path: Path
+def test_unparsable_input_fails_with_clear_page_count_error(
+    garbage_pdf: Path, tmp_path: Path
 ) -> None:
-    # pdfinfo can't parse this file even though pikepdf could repair it;
-    # the pipeline needs a page count before any mode-specific stage runs,
-    # so both compress and repair mode fail the same way here.
+    # The pipeline needs a page count before any mode-specific stage runs,
+    # so both compress and repair mode fail the same way for input that
+    # isn't a PDF at all.
     out = tmp_path / "out.pdf"
     with pytest.raises(PdfCompressError, match="page count"):
-        run_pipeline(_base_config(severely_corrupted_pdf, out, mode=Mode.repair))
+        run_pipeline(_base_config(garbage_pdf, out, mode=Mode.repair))
 
 
 def test_encrypted_pdf_is_rejected(encrypted_pdf: Path, tmp_path: Path) -> None:
     out = tmp_path / "out.pdf"
     with pytest.raises(PdfCompressError, match="Encrypted"):
         run_pipeline(_base_config(encrypted_pdf, out))
+
+
+def test_signed_pdf_still_compresses_after_warning(
+    signed_pdf: Path, tmp_path: Path
+) -> None:
+    # The signature warning is informational only; the pipeline still runs.
+    out = tmp_path / "out.pdf"
+    result = run_pipeline(_base_config(signed_pdf, out))
+    assert result is not None
+    assert result.installed
 
 
 def test_pdfa_mode_produces_compliant_output(sample_pdf: Path, tmp_path: Path) -> None:

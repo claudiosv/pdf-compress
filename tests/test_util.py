@@ -9,6 +9,7 @@ from pdf_compress.util import (
     create_pdfa_definition,
     file_bytes,
     find_icc_profile,
+    has_digital_signature,
     page_count,
     postscript_escape,
     stage_log_path,
@@ -25,6 +26,14 @@ def test_page_count(sample_pdf: Path) -> None:
 
 def test_page_count_single(single_page_pdf: Path) -> None:
     assert page_count(single_page_pdf) == 1
+
+
+def test_has_digital_signature_false_for_plain_pdf(sample_pdf: Path) -> None:
+    assert has_digital_signature(sample_pdf) is False
+
+
+def test_has_digital_signature_true_for_signed_pdf(signed_pdf: Path) -> None:
+    assert has_digital_signature(signed_pdf) is True
 
 
 def test_postscript_escape() -> None:

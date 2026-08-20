@@ -29,8 +29,7 @@ print(result.output_file, result.original_bytes, result.new_bytes)
 
 ## Requirements
 
-External tools: `gs` (Ghostscript), `pdfinfo` (Poppler), and `verapdf` (only needed
-for `--pdfa` output).
+External tools: `gs` (Ghostscript), and `verapdf` (only needed for `--pdfa` output).
 
 ## Development
 

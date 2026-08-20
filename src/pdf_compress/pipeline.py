@@ -34,6 +34,7 @@ from pdf_compress.util import (
     create_pdfa_definition,
     file_bytes,
     find_icc_profile,
+    has_digital_signature,
     page_count,
     require_command,
 )
@@ -104,8 +105,6 @@ def validate_pdfa_constraints(cfg: Config) -> str:
 
 
 def check_required_commands(cfg: Config) -> None:
-    require_command("pdfinfo", "Install Poppler.")
-
     if cfg.mode in (Mode.compress, Mode.repair, Mode.ps2pdf_recovery):
         ghostscript_module()  # raises PdfCompressError if libgs can't be loaded
 
@@ -171,15 +170,11 @@ def _run_pipeline_body(
 
     original_pages = page_count(input_real)
 
-    if shutil.which("pdfsig"):
-        sig = subprocess.run(
-            ["pdfsig", str(input_real)], capture_output=True, text=True, check=False
+    if has_digital_signature(input_real):
+        console.print(
+            "[yellow]Warning:[/yellow] The input contains a digital signature; "
+            "rewriting the PDF will invalidate it."
         )
-        if "Signature #" in sig.stdout:
-            console.print(
-                "[yellow]Warning:[/yellow] The input contains a digital signature; "
-                "rewriting the PDF will invalidate it."
-            )
 
     input_check_log = work_dir / "input-check.log"
     try:
