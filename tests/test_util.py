@@ -9,24 +9,10 @@ from pdf_compress.util import (
     create_pdfa_definition,
     file_bytes,
     find_icc_profile,
-    human_bytes,
     page_count,
     postscript_escape,
     stage_log_path,
 )
-
-
-@pytest.mark.parametrize(
-    ("n", "expected"),
-    [
-        (0, "0 B"),
-        (500, "500 B"),
-        (1024, "1.0 KiB"),
-        (1024 * 1024, "1.0 MiB"),
-    ],
-)
-def test_human_bytes(n: int, expected: str) -> None:
-    assert human_bytes(n) == expected
 
 
 def test_file_bytes(sample_pdf: Path) -> None:

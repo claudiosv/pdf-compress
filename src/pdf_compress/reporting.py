@@ -5,11 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 
 from rich.console import Console
+from rich.filesize import decimal
 from rich.panel import Panel
 from rich.table import Table
 
 from pdf_compress.models import Config, Mode
-from pdf_compress.util import human_bytes
 
 console = Console()
 err_console = Console(stderr=True)
@@ -92,10 +92,8 @@ def print_summary(
     )
     table.add_column(style="bold")
     table.add_column()
-    table.add_row(
-        "Original", f"{human_bytes(original_bytes)} ({original_bytes:,} bytes)"
-    )
-    table.add_row("Output", f"{human_bytes(new_bytes)} ({new_bytes:,} bytes)")
+    table.add_row("Original", f"{decimal(original_bytes)} ({original_bytes:,} bytes)")
+    table.add_row("Output", f"{decimal(new_bytes)} ({new_bytes:,} bytes)")
     table.add_row("Result", f"[{result_style}]{result}[/{result_style}]")
     table.add_row("Pages", str(pages))
     if pdfa_level != "none":
