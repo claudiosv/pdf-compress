@@ -15,8 +15,27 @@ from pdf_compress.util import stage_log_path
 def pymupdf_clean(src: Path, dst: Path, *, drop_structure: bool) -> list[str]:
     """Lossless structural/stream optimization.
 
-    Equivalent to
-    ``mutool clean -gggg -z -f -i -Z -t -m -e 100 --structure=keep|drop``.
+    Equivalent to ``mutool clean -gggg -z -f -i -Z -t -m -e 100
+    --structure=keep`` (or ``--structure=drop`` when ``drop_structure`` is
+    set):
+
+    - ``-gggg``: maximum garbage collection — remove unreachable objects,
+      compact the xref table, merge duplicate objects, and merge duplicate
+      streams.
+    - ``-z``: deflate-compress currently-uncompressed streams (lossless).
+    - ``-f``: compress font streams (lossless; does not subset fonts).
+    - ``-i``: compress image streams (does not recompress/downsample images).
+    - ``-Z``: use object streams and cross-reference streams to shrink
+      structural/object overhead.
+    - ``-t``: write PDF object syntax compactly, minimizing whitespace.
+    - ``-m``: preserve metadata.
+    - ``-e 100``: maximum compression effort (1-100; more CPU/time for a
+      potentially smaller output — not an image-quality setting).
+    - ``--structure=keep|drop``: keep or remove the tagged-PDF/accessibility
+      structure tree.
+
+    None of this touches image quality: it's dedup, recompression of
+    already-lossless streams, and structural overhead reduction only.
     """
     with pymupdf.open(src) as doc:
         if drop_structure:
