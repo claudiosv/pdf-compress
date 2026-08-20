@@ -1,0 +1,40 @@
+tests/conftest.py
+  s_40c403c06bd188::t_004efbd2342e89 42-43
+  s_40c403c06bd188::t_faa3562ebbaef1 67-81
+  s_40c403c06bd188::t_45b84f62e69285 54-55
+README.md
+  s_40c403c06bd188::t_acec9e3daac503 32
+src/pdf_compress/reporting.py
+  s_40c403c06bd188::t_962d553c31fa4f 48
+tests/test_util.py
+  s_40c403c06bd188::t_555a60f6ac319b 12
+  s_40c403c06bd188::t_fb0442d9702819 31-38
+src/pdf_compress/pipeline.py
+  s_40c403c06bd188::t_1653c6ac45159e 37
+  s_40c403c06bd188::t_a8f66e85b61ecb 173-176
+src/pdf_compress/util.py
+  s_40c403c06bd188::t_700f8c31884e62 32-41
+  s_40c403c06bd188::t_15039de1750199 8
+  s_40c403c06bd188::t_26cd0a771354de 25-29
+  s_40c403c06bd188::t_d4d1881a44f5c9 9
+  s_40c403c06bd188::t_f35699fc8ac412 30-31
+tests/test_pipeline.py
+  s_40c403c06bd188::t_0e4036e92d6516 68-69,71-73,76
+  s_40c403c06bd188::t_5f34806a812862 85-94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "4bcbb097f78b0de8448391b06c7eec53b3b5ddd5",
+  "prompts": {},
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
