@@ -1,0 +1,25 @@
+.gitignore
+  s_40c403c06bd188::t_93e3ce95aa167c 10-12
+pyproject.toml
+  s_40c403c06bd188::t_6b914dae615dfc 39-45
+  s_40c403c06bd188::t_15d9bad71be348 37
+  s_40c403c06bd188::t_cea628a941b967 25-29
+uv.lock
+  s_40c403c06bd188::t_eb0be5d4059fde 23-91,229,362-375
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "a25641e69a5dfa5217ee8b49166051f7b15a167f",
+  "prompts": {},
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
