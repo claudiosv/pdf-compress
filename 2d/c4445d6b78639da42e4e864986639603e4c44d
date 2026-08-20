@@ -1,0 +1,28 @@
+src/pdf_compress/cli.py
+  s_40c403c06bd188::t_7988ef908adfb1 99
+  h_aceaeb4e74d6dc 50
+  s_40c403c06bd188::t_3b053f7d08cc93 13
+tests/test_cli.py
+  s_40c403c06bd188::t_46991e618e2802 56-58,61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "2dc4445d6b78639da42e4e864986639603e4c44d",
+  "prompts": {},
+  "humans": {
+    "h_aceaeb4e74d6dc": {
+      "author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
