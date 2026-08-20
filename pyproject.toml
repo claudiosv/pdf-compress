@@ -22,7 +22,11 @@ scripts.pdf-compress = "pdf_compress.cli:app"
 version = "2.0.0"
 
 [dependency-groups]
-dev = ["pytest>=9.1.1", "ruff>=0.16.4"]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.4",
+]
 
 [tool.ruff]
 line-length    = 88
@@ -30,4 +34,12 @@ lint.select    = ["B", "E", "F", "I", "UP"]
 target-version = "py314"
 
 [tool.pytest]
+addopts = ["--cov=pdf_compress", "--cov-report=html", "--cov-report=term-missing"]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/pdf_compress"]
+
+[tool.coverage.html]
+directory = "htmlcov"
