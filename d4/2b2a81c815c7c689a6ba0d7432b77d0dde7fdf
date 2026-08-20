@@ -1,0 +1,27 @@
+pyproject.toml
+  h_aceaeb4e74d6dc 1-4,6-9,11-12,14-15,17-22,25,29-30
+  s_40c403c06bd188::t_cea7d5116c888a 28,32
+uv.lock
+  h_aceaeb4e74d6dc 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "d42b2a81c815c7c689a6ba0d7432b77d0dde7fdf",
+  "prompts": {},
+  "humans": {
+    "h_aceaeb4e74d6dc": {
+      "author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "unknown"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
