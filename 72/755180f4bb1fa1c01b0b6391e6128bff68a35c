@@ -1,0 +1,25 @@
+src/pdf_compress/pipeline.py
+  s_40c403c06bd188::t_2f1568bcc9da0c 1-387
+tests/conftest.py
+  s_40c403c06bd188::t_96f525e8213f20 1-78
+tests/test_pipeline.py
+  s_40c403c06bd188::t_a496d8d03b3323 1-134
+uv.lock
+  s_40c403c06bd188::t_14b5e82e92d13c 1-423
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "72755180f4bb1fa1c01b0b6391e6128bff68a35c",
+  "prompts": {},
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
