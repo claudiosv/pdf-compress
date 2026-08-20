@@ -53,10 +53,12 @@ def test_compress_produces_output_file(sample_pdf: Path, tmp_path: Path) -> None
     assert "Output installed" in result.output
 
 
-def test_qpdf_legacy_before_maps_to_repair(corrupted_pdf: Path, tmp_path: Path) -> None:
+def test_repair_mode_recovers_corrupted_pdf(
+    corrupted_pdf: Path, tmp_path: Path
+) -> None:
     out = tmp_path / "out.pdf"
     result = runner.invoke(
-        app, [str(corrupted_pdf), str(out), "--qpdf", "before", "--no-ui"]
+        app, [str(corrupted_pdf), str(out), "--mode", "repair", "--no-ui"]
     )
     assert result.exit_code == 0, result.output
     assert out.is_file()

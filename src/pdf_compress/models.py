@@ -20,12 +20,6 @@ class Quality(str, Enum):  # noqa: UP042
     default = "default"
 
 
-class QpdfLegacy(str, Enum):  # noqa: UP042
-    before = "before"
-    after = "after"
-    none = "none"
-
-
 @dataclass
 class Config:
     mode: Mode

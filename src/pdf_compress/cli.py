@@ -10,7 +10,7 @@ import typer
 
 from pdf_compress import __version__
 from pdf_compress.errors import PdfCompressError, PipelineError, UsageError
-from pdf_compress.models import Config, Mode, QpdfLegacy, Quality
+from pdf_compress.models import Config, Mode, Quality
 from pdf_compress.pipeline import (
     install_signal_handlers,
     resolve_config,
@@ -47,7 +47,7 @@ def main(
     ] = None,
     mode: Annotated[Mode, typer.Option(help="Processing mode.")] = Mode.compress,
     quality: Annotated[
-        Quality, typer.Option(help="Ghostscript PDFSETTINGS preset.")
+        Quality, typer.Option(help="Ghostscript PDFSETTINGS preset. Screen is lowest.")
     ] = Quality.ebook,
     compatibility: Annotated[
         str, typer.Option("--compatibility", help="PDF compatibility level, 1.2-1.7.")
@@ -90,49 +90,19 @@ def main(
         bool, typer.Option(help="Disable rich progress and spinners.")
     ] = False,
     no_color: Annotated[bool, typer.Option(help="Disable rich/ANSI styling.")] = False,
-    qpdf_legacy: Annotated[
-        QpdfLegacy | None,
-        typer.Option("--qpdf", help="Legacy: maps to repair mode or --linearize."),
-    ] = None,
-    ps2pdf_legacy: Annotated[
-        bool, typer.Option("--ps2pdf", help="Legacy: maps to --mode ps2pdf-recovery.")
-    ] = False,
-    preserve_annots: Annotated[
-        bool,
-        typer.Option(
-            "--preserve-annots",
-            help="Accepted as a no-op; preservation is now the default.",
-        ),
-    ] = False,
     version: Annotated[
         bool | None,
         typer.Option("--version", callback=version_callback, is_eager=True),
     ] = None,
 ) -> None:
     """Compress and optimize a PDF file."""
-    del preserve_annots, version  # accepted for compatibility / handled via callback
+    del version  # handled via the eager callback
 
     if no_color:
         console.no_color = True
         err_console.no_color = True
 
-    mode_explicit = mode != Mode.compress
-
     try:
-        if qpdf_legacy == QpdfLegacy.before:
-            if mode_explicit and mode != Mode.repair:
-                raise UsageError(f"--qpdf before conflicts with --mode {mode.value}.")
-            mode = Mode.repair
-        elif qpdf_legacy == QpdfLegacy.after:
-            linearize = True
-
-        if ps2pdf_legacy:
-            if qpdf_legacy == QpdfLegacy.before:
-                raise UsageError("--ps2pdf conflicts with --qpdf before.")
-            if mode_explicit and mode != Mode.ps2pdf_recovery:
-                raise UsageError(f"--ps2pdf conflicts with --mode {mode.value}.")
-            mode = Mode.ps2pdf_recovery
-
         if not re.fullmatch(r"1\.[2-7]", compatibility):
             raise UsageError("Compatibility must be between 1.2 and 1.7.")
 
