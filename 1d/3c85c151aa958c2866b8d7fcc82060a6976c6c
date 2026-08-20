@@ -1,0 +1,24 @@
+src/pdf_compress/pymupdf_ops.py
+  s_40c403c06bd188::t_ccd88a5231deb5 18-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "1d3c85c151aa958c2866b8d7fcc82060a6976c6c",
+  "prompts": {},
+  "humans": {
+    "h_aceaeb4e74d6dc": {
+      "author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_40c403c06bd188": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94aaa836-75b5-4fc2-8996-eb5968e73a25",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claudio Spiess <claudiosv@users.noreply.github.com>"
+    }
+  }
+}
